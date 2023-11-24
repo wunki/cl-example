@@ -20,8 +20,8 @@ find . -type f -name "*.lisp" -exec sed -i '' "s/example/${PROJECT_NAME}/g" {} \
 
 # Rename the files accordingly.
 echo "Renaming files..."
-mv cl-example.asd ${PROJECT_NAME}.asd
-mv cl-example.test.asd ${PROJECT_NAME}.test.asd
+mv cl-example.asd cl-${PROJECT_NAME}.asd
+mv cl-example.test.asd cl-${PROJECT_NAME}.test.asd
 mv src/example.lisp src/${PROJECT_NAME}.lisp
 
 # Ask to nuke the .git folder.
