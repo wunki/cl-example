@@ -1,68 +1,81 @@
 #!/usr/bin/env bash
 
-# Ask for the project name and store it in a variable.
-echo "What is the name of the project? Please use the name without the cl- prefix."
-read -r PROJECT_NAME
+# Function to get user input
+get_input() {
+    local prompt=$1
+    local var_name=$2
+    echo "$prompt"
+    read -r $var_name
+}
 
-# What is your full name?
-echo "What is your full name?"
-read -r AUTHOR_NAME
+# Function to update placeholders with supplied extension.
+update_placeholders() {
+    local extension=$1
+    find . -type f -name "*.$extension" -exec sed -i '' \
+        -e "s/\${TITLE_CASED_PROJECT_NAME}/$TITLE_CASED_PROJECT_NAME/g" \
+        -e "s/\${PROJECT_NAME}/$PROJECT_NAME/g" \
+        -e "s/\${PROJECT_DESCRIPTION}/$PROJECT_DESCRIPTION/g" \
+        -e "s/\${PROJECT_WEBSITE}/$PROJECT_WEBSITE/g" \
+        -e "s/\${AUTHOR_NAME}/$AUTHOR_NAME/g" \
+        -e "s/\${AUTHOR_EMAIL}/$AUTHOR_EMAIL/g" {} \;
+}
 
-# What is your email address?
-echo "What is your email address?"
-read -r AUTHOR_EMAIL
+# Function to update the LICENSE file.
+update_license() {
+    sed -i '' \
+        -e "s/\${AUTHOR_NAME}/$AUTHOR_NAME/g" \
+        -e "s/\${AUTHOR_EMAIL}/$AUTHOR_EMAIL/g" \
+        -e "s/\${CURRENT_YEAR}/$CURRENT_YEAR/g" LICENSE
+}
 
-# Replace the ${PROJECT_NAME} placeholder in all org files with the title cased project name.
+# Function to rename files.
+rename_files() {
+    mv cl-example.asd cl-${PROJECT_NAME}.asd
+    mv cl-example.test.asd cl-${PROJECT_NAME}.test.asd
+    mv src/example.lisp src/${PROJECT_NAME}.lisp
+    mv README.template.org README.org
+    mv NOTES.template.org NOTES.org
+}
+
+get_input "What is the name of the project? Please use the name without the cl- prefix." PROJECT_NAME
+get_input "What's a short description of the project?" PROJECT_DESCRIPTION
+get_input "What's the website of the project?" PROJECT_WEBSITE
+get_input "What is your full name?" AUTHOR_NAME
+get_input "What is your email address?" AUTHOR_EMAIL
+
+# Convert project name to title case
 TITLE_CASED_PROJECT_NAME=$(echo "${PROJECT_NAME}" | perl -pe 's/(^|_)./uc($&)/ge;s/_/ /g')
+
+# Update placeholders
 echo "Replacing placeholders in all template files..."
-find . -type f -name "*.org" -exec sed -i '' "s/\${TITLE_CASED_PROJECT_NAME}/${TITLE_CASED_PROJECT_NAME}/g" {} \;
-find . -type f -name "*.org" -exec sed -i '' "s/\${PROJECT_NAME}/${PROJECT_NAME}/g" {} \;
-find . -type f -name "*.org" -exec sed -i '' "s/\${AUTHOR_NAME}/${AUTHOR_NAME}/g" {} \;
-find . -type f -name "*.org" -exec sed -i '' "s/\${AUTHOR_EMAIL}/${AUTHOR_EMAIL}/g" {} \;
+update_placeholders org
+update_placeholders asd
+update_placeholders lisp
 
-# Update the LICENSE file with the current year and the author name and email.
+# Update the LICENSE file with the current year and author details
 CURRENT_YEAR=$(date +"%Y")
-sed -i '' "s/\${AUTHOR_NAME}/${AUTHOR_NAME}/g" LICENSE
-sed -i '' "s/\${AUTHOR_EMAIL}/${AUTHOR_EMAIL}/g" LICENSE
-sed -i '' "s/\${CURRENT_YEAR}/${CURRENT_YEAR}/g" LICENSE
+update_license
 
-# Find all occurences of cl-example inside the .asd files with the new name.
+# Renaming system and package names
 echo "Renaming system cl-example to cl-${PROJECT_NAME}..."
-find . -type f -name "*.asd" -exec sed -i '' "s/cl-example/cl-${PROJECT_NAME}/g" {} \;
-
-# Find all occurences of example inside the .lisp files with the new name.
 echo "Renaming package example to ${PROJECT_NAME}..."
-find . -type f -name "*.lisp" -exec sed -i '' "s/example/${PROJECT_NAME}/g" {} \;
 
-# Rename the files accordingly.
+# Rename the files
 echo "Renaming files..."
-mv cl-example.asd cl-${PROJECT_NAME}.asd
-mv cl-example.test.asd cl-${PROJECT_NAME}.test.asd
-mv src/example.lisp src/${PROJECT_NAME}.lisp
-mv README.template.org README.org
-mv NOTES.template.org NOTES.org
+rename_files
 
-# Ask to nuke the .git folder.
+# Reset .git folder
 echo "Do you want to reset the .git folder? [y/N]"
 read -r response
-
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
-    rm -rf .git
-    git init
-    echo "Done."
-else
-    echo "Don't forget to remove the .git folder yourself!"
+    rm -rf .git && git init && echo "Git repository reset."
 fi
 
-# Ask to remove this script.
+# Remove this script
 echo "Do you want to remove this script? [y/N]"
 read -r response
-
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
-    rm setup.sh
-    echo "Done."
-else
-    echo "Don't forget to remove this script yourself!"
+    rm setup.sh && echo "Setup script removed."
 fi
 
-echo "Done. Only thing left is to update the README.org file."
+echo "Setup complete. Please update the README.org file as needed."

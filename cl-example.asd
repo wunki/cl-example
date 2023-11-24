@@ -1,7 +1,7 @@
 (asdf:defsystem :cl-example
-  :description "Example Common Lisp project"
-  :author "John McCarthy <john@example.com>"
-  :homepage "https://www.gnu.org/software/emacs/"
+  :description "${PROJECT_DESCRIPTION}"
+  :author "${AUTHOR_NAME} <${AUTHOR_EMAIL}>"
+  :homepage "${PROJECT_WEBSITE}"
 
   :license "MIT"
   :version "0.0.1"

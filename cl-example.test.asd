@@ -1,7 +1,7 @@
 (asdf:defsystem :cl-example.test
-  :description "Test suite for cl-example"
+  :description "Test suite for ${PROJECT_NAME}"
 
-  :author "Petar Radosevic <petar@petar.dev>"
+  :author "${AUTHOR_NAME} <${AUTHOR_EMAIL}>"
   :license "MIT"
 
   :depends-on (:cl-example
