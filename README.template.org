@@ -1,0 +1,22 @@
+* ${PROJECT_NAME}
+
+/Simple overview of use/purpose./
+
+** Description
+
+/An in-depth paragraph about your project and overview of use./
+
+** Getting Started with Emacs
+
+- Load the =.asd= files for both the library and the test by visiting the .asd files and running =C-c C-k=.
+- Start the REPL, I'm using Sly.
+- Run =(ql:quickload :cl-${PROJECT_NAME})= and =(ql:quickload :cl-${PROJECT_NAME}.test)=. You could also do =(require :cl-${PROJECT_NAME})= but that will not download any required dependencies.
+- Happy coding.
+
+** Author(s)
+
+- ${AUTHOR_NAME} <${AUTHOR_EMAIL}>
+
+** License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
