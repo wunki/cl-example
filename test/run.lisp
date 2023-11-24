@@ -1,3 +1,3 @@
-(ql:quickload 'cl-example.test :silent t)
-(time (asdf:test-system 'cl-example))
+(ql:quickload 'cl-${PROJECT_NAME}.test :silent t)
+(time (asdf:test-system 'cl-${PROJECT_NAME}))
 (quit)
