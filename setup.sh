@@ -31,8 +31,6 @@ read -r response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
     rm -rf .git
     git init
-    git add .
-    git commit -m "Initial commit"
     echo "Done."
 else
     echo "Don't forget to remove the .git folder yourself!"
