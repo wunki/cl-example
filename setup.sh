@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Function to escape special characters
+escape_input() {
+    local input=$1
+    echo "$input" | sed -e 's/[\/&]/\\&/g'
+}
+
 # Function to get user input
 get_input() {
     local prompt=$1
@@ -14,8 +20,8 @@ update_placeholders() {
     find . -type f -name "*.$extension" -exec sed -i '' \
         -e "s/\${TITLE_CASED_PROJECT_NAME}/$TITLE_CASED_PROJECT_NAME/g" \
         -e "s/\${PROJECT_NAME}/$PROJECT_NAME/g" \
-        -e "s/\${PROJECT_DESCRIPTION}/$PROJECT_DESCRIPTION/g" \
-        -e "s/\${PROJECT_WEBSITE}/$PROJECT_WEBSITE/g" \
+        -e "s/\${PROJECT_DESCRIPTION}/$ESCAPED_PROJECT_DESCRIPTION/g" \
+        -e "s/\${PROJECT_WEBSITE}/$ESCAPED_PROJECT_WEBSITE/g" \
         -e "s/\${AUTHOR_NAME}/$AUTHOR_NAME/g" \
         -e "s/\${AUTHOR_EMAIL}/$AUTHOR_EMAIL/g" {} \;
 }
@@ -37,11 +43,16 @@ rename_files() {
     mv NOTES.template.org NOTES.org
 }
 
+# Get inputs
 get_input "What is the name of the project? Please use the name without the cl- prefix." PROJECT_NAME
 get_input "What's a short description of the project?" PROJECT_DESCRIPTION
 get_input "What's the website of the project?" PROJECT_WEBSITE
 get_input "What is your full name?" AUTHOR_NAME
 get_input "What is your email address?" AUTHOR_EMAIL
+
+# Escape special characters in inputs
+ESCAPED_PROJECT_DESCRIPTION=$(escape_input "$PROJECT_DESCRIPTION")
+ESCAPED_PROJECT_WEBSITE=$(escape_input "$PROJECT_WEBSITE")
 
 # Convert project name to title case
 TITLE_CASED_PROJECT_NAME=$(echo "${PROJECT_NAME}" | perl -pe 's/(^|_)./uc($&)/ge;s/_/ /g')
