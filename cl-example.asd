@@ -1,4 +1,4 @@
-(asdf:defsystem :cl-example
+(asdf:defsystem :cl-${PROJECT_NAME}
   :description "${PROJECT_DESCRIPTION}"
   :author "${AUTHOR_NAME} <${AUTHOR_EMAIL}>"
   :homepage "${PROJECT_WEBSITE}"
@@ -8,10 +8,10 @@
 
   :depends-on ()
 
-  :in-order-to ((asdf:test-op (asdf:test-op :cl-example.test)))
+  :in-order-to ((asdf:test-op (asdf:test-op :cl-${PROJECT_NAME}.test)))
 
   :serial t
   :components ((:file "package")
                (:module "src"
                 :serial t
-                :components ((:file "example")))))
+                :components ((:file "${PROJECT_NAME}")))))

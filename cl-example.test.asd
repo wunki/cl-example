@@ -1,10 +1,10 @@
-(asdf:defsystem :cl-example.test
+(asdf:defsystem :cl-${PROJECT_NAME}.test
   :description "Test suite for ${PROJECT_NAME}"
 
   :author "${AUTHOR_NAME} <${AUTHOR_EMAIL}>"
   :license "MIT"
 
-  :depends-on (:cl-example
+  :depends-on (:cl-${PROJECT_NAME}
                :1am)
 
   :serial t
@@ -15,4 +15,4 @@
 
   :perform (asdf:test-op
              (op system)
-             (uiop:symbol-call :example.test :run-tests)))
+             (uiop:symbol-call :${PROJECT_NAME}.test :run-tests)))

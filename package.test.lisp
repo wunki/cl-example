@@ -1,7 +1,7 @@
-(defpackage :example.test
+(defpackage :${PROJECT_NAME}.test
   (:use
     :cl
     :1am
-    :example)
+    :${PROJECT_NAME})
   (:export
     :run-tests))
