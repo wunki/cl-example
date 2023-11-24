@@ -1,0 +1,19 @@
+* Common Lisp Example Project
+
+This is the example project that I use for new Common Lisp projects. It's as minimal as possible and will enable you to have both a package for your code and a package for your tests.
+
+** Usage
+
+- Clone the repository.
+- Rename the files according to the name of your package. I tend to include =cl= for the system name and remove the =cl= for the package name. E.g. =cl-example= for the system, =example= for the package name.
+
+** Usage in Emacs
+
+- Load the =.asd= files for both packages by visiting them and pressing =C-c C-k=.
+- Start the REPL, I'm using Sly.
+- Run =(ql:quickload :cl-example)= and =(ql:quickload :cl-example.test)=. You could also do =(require :cl-example)= but that will not download any required dependencies.
+- That's it!
+
+* Credits
+
+The example project is based on the projects from [[https://github.com/sjl][Steve Losh]].
