@@ -4,8 +4,8 @@ This is the example project that I use for new Common Lisp projects. It's as min
 
 ** Usage
 
-- Clone the repository.
-- Rename the files according to the name of your package. I tend to include =cl= for the system name and remove the =cl= for the package name. E.g. =cl-example= for the system, =example= for the package name.
+- Clone this repository.
+- Run the =setup.sh= script with =./setup.sh=. This will ask you for your new project name and set up all the files for you. Make sure you supply your name without the =cl-= prefix. In the end, it will also ask you if you want a fresh Git repository.
 
 ** Usage in Emacs
 
