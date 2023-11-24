@@ -1,3 +1,3 @@
 (in-package :${PROJECT_NAME})
 
-;; let there be light.
+;; where there was darkness, now there is light
