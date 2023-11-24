@@ -1,6 +1,6 @@
-* ${PROJECT_NAME}
+* ${TITLE_CASED_PROJECT_NAME}
 
-/Simple overview of use/purpose./
+/Simple overview of use and purpose./
 
 ** Description
 

@@ -15,7 +15,8 @@ read -r AUTHOR_EMAIL
 # Replace the ${PROJECT_NAME} placeholder in all org files with the title cased project name.
 TITLE_CASED_PROJECT_NAME=$(echo "${PROJECT_NAME}" | perl -pe 's/(^|_)./uc($&)/ge;s/_/ /g')
 echo "Replacing placeholders in all template files..."
-find . -type f -name "*.org" -exec sed -i '' "s/\${PROJECT_NAME}/${TITLE_CASED_PROJECT_NAME}/g" {} \;
+find . -type f -name "*.org" -exec sed -i '' "s/\${TITLE_CASED_PROJECT_NAME}/${TITLE_CASED_PROJECT_NAME}/g" {} \;
+find . -type f -name "*.org" -exec sed -i '' "s/\${PROJECT_NAME}/${PROJECT_NAME}/g" {} \;
 find . -type f -name "*.org" -exec sed -i '' "s/\${AUTHOR_NAME}/${AUTHOR_NAME}/g" {} \;
 find . -type f -name "*.org" -exec sed -i '' "s/\${AUTHOR_EMAIL}/${AUTHOR_EMAIL}/g" {} \;
 
@@ -39,6 +40,7 @@ mv cl-example.asd cl-${PROJECT_NAME}.asd
 mv cl-example.test.asd cl-${PROJECT_NAME}.test.asd
 mv src/example.lisp src/${PROJECT_NAME}.lisp
 mv README.template.org README.org
+mv NOTES.template.org NOTES.org
 
 # Ask to nuke the .git folder.
 echo "Do you want to reset the .git folder? [y/N]"
